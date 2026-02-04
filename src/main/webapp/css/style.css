@@ -1,0 +1,22 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.hero {
+    background: linear-gradient(to right, #141e30, #243b55);
+    color: white;
+    padding: 60px 20px;
+}
+
+.movie-card img {
+    height: 280px;
+    object-fit: cover;
+}
+
+.movie-card {
+    transition: transform 0.2s;
+}
+
+.movie-card:hover {
+    transform: scale(1.03);
+}
