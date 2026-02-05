@@ -7,16 +7,11 @@ public class DBConnection {
 
     public static Connection getConnection() throws Exception {
 
-        String host = System.getenv("btnsj9lhwbgxt0ungzqk-mysql.services.clever-cloud.com\r\n"
-        		+ "");
-        String db   = System.getenv("btnsj9lhwbgxt0ungzqk\r\n"
-        		+ "");
-        String user = System.getenv("ulr4ple07ls3idul\r\n"
-        		+ "");
-        String pass = System.getenv("2WaPzfow5IeTyaF7FETR\r\n"
-        		+ "");
-        String port = System.getenv("3306\r\n"
-        		+ "");
+        String host = System.getenv("MYSQL_HOST");
+        String db   = System.getenv("MYSQL_DATABASE");
+        String user = System.getenv("MYSQL_USER");
+        String pass = System.getenv("MYSQL_PASSWORD");
+        String port = System.getenv("MYSQL_PORT");
 
         String url = "jdbc:mysql://" + host + ":" + port + "/" + db +
                      "?useSSL=true&allowPublicKeyRetrieval=true&serverTimezone=UTC";
