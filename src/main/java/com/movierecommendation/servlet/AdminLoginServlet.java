@@ -36,11 +36,9 @@ public class AdminLoginServlet extends HttpServlet {
             if (rs.next()) {
                 HttpSession session = request.getSession(true);
                 session.setAttribute("admin", username);
-
-                // ✅ ABSOLUTE redirect (THIS FIXES LOGIN LOOP)
-                response.sendRedirect(request.getContextPath() + "/adminDashboard.jsp");
-                return;
+                response.sendRedirect(request.getContextPath() + "/admin");
             }
+
 
             response.sendRedirect(request.getContextPath() + "/adminLogin.jsp");
 

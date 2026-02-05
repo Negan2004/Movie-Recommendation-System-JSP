@@ -19,26 +19,26 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/home")
 public class GenreServlet extends HttpServlet {
 
-    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        List<String> genres = new ArrayList<>();
+            throws IOException {
 
         try (Connection con = DBConnection.getConnection();
              Statement st = con.createStatement();
              ResultSet rs = st.executeQuery("SELECT genre_name FROM genres")) {
 
+            List<String> genres = new ArrayList<>();
             while (rs.next()) {
                 genres.add(rs.getString("genre_name"));
             }
 
+            request.getSession().setAttribute("genres", genres);
+
+            // 🔥 REDIRECT, NOT FORWARD
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
+
         } catch (Exception e) {
             e.printStackTrace();
+            response.sendError(500);
         }
-
-        request.setAttribute("genres", genres);
-        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
-        rd.forward(request, response);
     }
 }
