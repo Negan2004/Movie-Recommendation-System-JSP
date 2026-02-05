@@ -2,10 +2,8 @@ package com.movierecommendation.servlet;
 
 import com.movierecommendation.util.DBConnection;
 
-
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -18,28 +16,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/home")
+@WebServlet({"/", "/home"})
 public class GenreServlet extends HttpServlet {
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         List<String> genres = new ArrayList<>();
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-
-            Connection con = DBConnection.getConnection();
-
-
-            Statement st = con.createStatement();
-            ResultSet rs = st.executeQuery("SELECT genre_name FROM genres");
+        try (Connection con = DBConnection.getConnection();
+             Statement st = con.createStatement();
+             ResultSet rs = st.executeQuery("SELECT genre_name FROM genres")) {
 
             while (rs.next()) {
                 genres.add(rs.getString("genre_name"));
             }
-
-            con.close();
 
         } catch (Exception e) {
             e.printStackTrace();

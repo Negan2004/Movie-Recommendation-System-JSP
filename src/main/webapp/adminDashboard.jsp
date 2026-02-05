@@ -3,8 +3,7 @@
 
 <%
 /* ================= ADMIN AUTH CHECK ================= */
-String admin = (String) session.getAttribute("admin");
-if (admin == null) {
+if (session == null || session.getAttribute("admin") == null) {
     response.sendRedirect("adminLogin.jsp");
     return;
 }

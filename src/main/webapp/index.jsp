@@ -81,12 +81,13 @@
 
     <div class="row g-4 justify-content-center">
 
-        <%
-        List<String> genres = (List<String>) request.getAttribute("genres");
+       <%
+List<String> genres = (List<String>) request.getAttribute("genres");
 
-        if (genres != null) {
-            for (String genre : genres) {
-        %>
+if (genres != null && !genres.isEmpty()) {
+    for (String genre : genres) {
+%>
+
 
         <div class="col-md-3 col-sm-6">
             <form action="recommend" method="get">
