@@ -6,12 +6,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("")
+@WebServlet("/")
 public class IndexRedirectServlet extends HttpServlet {
 
+    @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException {
 
-        response.sendRedirect("home");
+        // Always redirect root to /home
+        response.sendRedirect(request.getContextPath() + "/home");
     }
 }

@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet({"/", "/home"})
+@WebServlet("/home")
 public class GenreServlet extends HttpServlet {
 
     @Override
@@ -38,7 +38,7 @@ public class GenreServlet extends HttpServlet {
         }
 
         request.setAttribute("genres", genres);
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("/index.jsp");
         rd.forward(request, response);
     }
 }

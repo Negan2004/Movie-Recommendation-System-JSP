@@ -1,6 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
 <%@ page import="java.util.List" %>
 
+<%
+/* 🚫 Block direct access — must come via /home servlet */
+List<String> genres = (List<String>) request.getAttribute("genres");
+if (genres == null) {
+    response.sendRedirect(request.getContextPath() + "/home");
+    return;
+}
+%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -39,11 +48,11 @@
             text-align: center;
             transition: all .35s ease;
             cursor: pointer;
-            color: #ffffff; /* 🔥 FIX */
+            color: #ffffff;
         }
 
         .genre-card h5 {
-            color: #ffffff; /* 🔥 FIX */
+            color: #ffffff;
         }
 
         .genre-card:hover {
@@ -81,16 +90,13 @@
 
     <div class="row g-4 justify-content-center">
 
-       <%
-List<String> genres = (List<String>) request.getAttribute("genres");
-
-if (genres != null && !genres.isEmpty()) {
-    for (String genre : genres) {
-%>
-
+        <%
+        if (!genres.isEmpty()) {
+            for (String genre : genres) {
+        %>
 
         <div class="col-md-3 col-sm-6">
-            <form action="recommend" method="get">
+            <form action="<%= request.getContextPath() %>/recommend" method="get">
                 <input type="hidden" name="genre" value="<%= genre %>">
 
                 <button type="submit" class="w-100 bg-transparent border-0">
@@ -105,6 +111,12 @@ if (genres != null && !genres.isEmpty()) {
 
         <%
             }
+        } else {
+        %>
+            <p class="text-center text-warning">
+                No genres found. Please add genres from Admin Dashboard.
+            </p>
+        <%
         }
         %>
 

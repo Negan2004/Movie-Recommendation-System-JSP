@@ -4,7 +4,7 @@
 <%
 /* ================= ADMIN AUTH CHECK ================= */
 if (session == null || session.getAttribute("admin") == null) {
-    response.sendRedirect("adminLogin.jsp");
+    response.sendRedirect(request.getContextPath() + "/adminLogin.jsp");
     return;
 }
 
@@ -13,23 +13,18 @@ Connection con = null;
 try {
     con = DBConnection.getConnection();
 } catch (Exception e) {
-    e.printStackTrace(); // goes to Render logs
+    e.printStackTrace();
     response.sendError(500, "Database connection failed");
     return;
 }
 %>
-
-
 
 <!DOCTYPE html>
 <html>
 <head>
     <title>Admin Dashboard</title>
 
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 
@@ -40,7 +35,7 @@ try {
 <!-- ================= HEADER ================= -->
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="bi bi-speedometer2"></i> Admin Dashboard</h2>
-    <a href="logout" class="btn btn-outline-danger">
+    <a href="<%= request.getContextPath() %>/logout" class="btn btn-outline-danger">
         <i class="bi bi-box-arrow-right"></i> Logout
     </a>
 </div>
@@ -51,7 +46,7 @@ try {
         <i class="bi bi-tags"></i> Add New Genre
     </div>
     <div class="card-body">
-        <form method="post" action="addGenre" class="d-flex gap-2">
+        <form method="post" action="<%= request.getContextPath() %>/addGenre" class="d-flex gap-2">
             <input class="form-control" name="genre_name"
                    placeholder="Enter genre (eg Thriller)" required>
             <button class="btn btn-primary">
@@ -68,7 +63,7 @@ try {
     </div>
     <div class="card-body">
 
-        <form method="post" action="addMovie">
+        <form method="post" action="<%= request.getContextPath() %>/addMovie">
             <input class="form-control mb-2" name="title" placeholder="Movie Title" required>
 
             <select class="form-control mb-2" name="genre" required>
@@ -108,7 +103,7 @@ try {
     </div>
     <div class="card-body">
 
-        <form method="post" action="updateMovie">
+        <form method="post" action="<%= request.getContextPath() %>/updateMovie">
             <input class="form-control mb-2" name="movie_id"
                    placeholder="Movie ID (auto-filled from list)" required>
 
@@ -179,7 +174,7 @@ try {
                         <i class="bi bi-pencil"></i> Edit
                     </button>
 
-                    <a href="deleteMovie?id=<%= rs.getInt("movie_id") %>"
+                    <a href="<%= request.getContextPath() %>/deleteMovie?id=<%= rs.getInt("movie_id") %>"
                        class="btn btn-sm btn-danger"
                        onclick="return confirm('Delete this movie?')">
                         <i class="bi bi-trash"></i> Delete
@@ -200,16 +195,9 @@ try {
 
 </div>
 
-<!-- FOOTER -->
 <footer class="bg-dark text-light text-center py-3">
     © 2026 Movie Recommendation System | Java · JSP · MySQL
 </footer>
 
 </body>
 </html>
-
-<%
-if (con != null) {
-    con.close();
-}
-%>

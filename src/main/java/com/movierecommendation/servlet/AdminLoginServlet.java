@@ -35,19 +35,22 @@ public class AdminLoginServlet extends HttpServlet {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                HttpSession session = request.getSession();
-                session.setAttribute("admin", username);
-                session.setMaxInactiveInterval(1800); // 30 minutes
+                // ✅ Always create a new session
+                HttpSession session = request.getSession(true);
+                session.setAttribute("admin", rs.getString("username"));
+                session.setMaxInactiveInterval(30 * 60); // 30 minutes
 
-                response.sendRedirect("adminDashboard.jsp");
+                // ✅ ABSOLUTE redirect (cloud safe)
+                response.sendRedirect(request.getContextPath() + "/adminDashboard.jsp");
                 return;
             }
 
-            response.sendRedirect("adminLogin.jsp");
+            // ❌ Invalid login
+            response.sendRedirect(request.getContextPath() + "/adminLogin.jsp");
 
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("adminLogin.jsp");
+            response.sendRedirect(request.getContextPath() + "/adminLogin.jsp");
         }
     }
 }
