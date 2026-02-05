@@ -2,18 +2,24 @@
 <%@ page import="com.movierecommendation.util.DBConnection" %>
 
 <%
-if (session == null || session.getAttribute("admin") == null) {
+/* ================= ADMIN AUTH CHECK ================= */
+String admin = (String) session.getAttribute("admin");
+if (admin == null) {
     response.sendRedirect("adminLogin.jsp");
     return;
 }
 
+/* ================= DB CONNECTION ================= */
 Connection con = null;
 try {
     con = DBConnection.getConnection();
 } catch (Exception e) {
-    out.println("DB Error: " + e.getMessage());
+    e.printStackTrace(); // goes to Render logs
+    response.sendError(500, "Database connection failed");
+    return;
 }
 %>
+
 
 
 <!DOCTYPE html>
@@ -202,3 +208,9 @@ try {
 
 </body>
 </html>
+
+<%
+if (con != null) {
+    con.close();
+}
+%>
