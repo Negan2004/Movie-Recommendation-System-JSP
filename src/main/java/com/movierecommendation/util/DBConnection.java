@@ -13,6 +13,12 @@ public class DBConnection {
         String pass = System.getenv("MYSQL_PASSWORD");
         String port = System.getenv("MYSQL_PORT");
 
+        // 🔍 DEBUG (TEMPORARY)
+        System.out.println("MYSQL_HOST=" + host);
+        System.out.println("MYSQL_PORT=" + port);
+        System.out.println("MYSQL_DATABASE=" + db);
+        System.out.println("MYSQL_USER=" + user);
+        
         String url = "jdbc:mysql://" + host + ":" + port + "/" + db +
                      "?useSSL=true&allowPublicKeyRetrieval=true&serverTimezone=UTC";
 
