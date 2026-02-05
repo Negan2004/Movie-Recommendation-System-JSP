@@ -1,5 +1,8 @@
 package com.movierecommendation.servlet;
 
+import com.movierecommendation.util.DBConnection;
+
+
 import java.io.IOException;
 import java.sql.*;
 
@@ -19,11 +22,8 @@ public class AdminLoginServlet extends HttpServlet {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/movie_recommendation_db",
-                "root",
-                "Sam@2004"
-            );
+            Connection con = DBConnection.getConnection();
+
 
             PreparedStatement ps = con.prepareStatement(
                 "SELECT * FROM admin WHERE username=? AND password=?"

@@ -1,5 +1,8 @@
 package com.movierecommendation.servlet;
 
+import com.movierecommendation.util.DBConnection;
+
+
 import com.movierecommendation.model.Movie;
 import java.io.IOException;
 import java.sql.Connection;
@@ -29,11 +32,8 @@ public class RecommendServlet extends HttpServlet {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/movie_recommendation_db",
-                "root",
-                "Sam@2004"
-            );
+            Connection con = DBConnection.getConnection();
+
 
             PreparedStatement ps = con.prepareStatement(
                 "SELECT * FROM movies ORDER BY rating DESC"

@@ -1,5 +1,8 @@
 package com.movierecommendation.servlet;
 
+import com.movierecommendation.util.DBConnection;
+
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -19,11 +22,8 @@ public class DeleteMovieServlet extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
 
         try {
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/movie_recommendation_db",
-                "root",
-                "Sam@2004"
-            );
+        	Connection con = DBConnection.getConnection();
+
 
             PreparedStatement ps =
                 con.prepareStatement("DELETE FROM movies WHERE movie_id=?");

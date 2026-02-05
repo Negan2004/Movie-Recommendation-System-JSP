@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.movierecommendation.util.DBConnection;
+
 @WebServlet("/updateMovie")
 public class UpdateMovieServlet extends HttpServlet {
 
@@ -28,11 +30,8 @@ public class UpdateMovieServlet extends HttpServlet {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/movie_recommendation_db",
-                "root",
-                "Sam@2004"
-            );
+            Connection con = DBConnection.getConnection();
+
 
             StringBuilder sql = new StringBuilder("UPDATE movies SET ");
             List<Object> params = new ArrayList<>();

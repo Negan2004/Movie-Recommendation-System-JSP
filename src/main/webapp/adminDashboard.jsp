@@ -1,22 +1,20 @@
 <%@ page import="java.sql.*" %>
+<%@ page import="com.movierecommendation.util.DBConnection" %>
+
 <%
 if (session == null || session.getAttribute("admin") == null) {
     response.sendRedirect("adminLogin.jsp");
     return;
 }
 
+Connection con = null;
 try {
-    Class.forName("com.mysql.cj.jdbc.Driver");
+    con = DBConnection.getConnection();
 } catch (Exception e) {
-    out.println("Driver error: " + e);
+    out.println("DB Error: " + e.getMessage());
 }
-
-Connection con = DriverManager.getConnection(
-    "jdbc:mysql://localhost:3306/movie_recommendation_db",
-    "root",
-    "Sam@2004"
-);
 %>
+
 
 <!DOCTYPE html>
 <html>

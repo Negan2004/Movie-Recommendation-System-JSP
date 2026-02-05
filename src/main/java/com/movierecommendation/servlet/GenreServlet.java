@@ -1,5 +1,8 @@
 package com.movierecommendation.servlet;
 
+import com.movierecommendation.util.DBConnection;
+
+
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,11 +29,8 @@ public class GenreServlet extends HttpServlet {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
-            Connection con = DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/movie_recommendation_db?useSSL=false&serverTimezone=UTC",
-                "root",
-                "Sam@2004"
-            );
+            Connection con = DBConnection.getConnection();
+
 
             Statement st = con.createStatement();
             ResultSet rs = st.executeQuery("SELECT genre_name FROM genres");
