@@ -19,15 +19,14 @@ public class AdminLoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+            throws IOException {
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(
-                 "SELECT username FROM admin WHERE username=? AND password=?"
-             )) {
+                     "SELECT username FROM admin WHERE username=? AND password=?")) {
 
             ps.setString(1, username);
             ps.setString(2, password);
@@ -35,17 +34,14 @@ public class AdminLoginServlet extends HttpServlet {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                // ✅ Always create a new session
                 HttpSession session = request.getSession(true);
-                session.setAttribute("admin", rs.getString("username"));
-                session.setMaxInactiveInterval(30 * 60); // 30 minutes
+                session.setAttribute("admin", username);
 
-                // ✅ ABSOLUTE redirect (cloud safe)
+                // ✅ ABSOLUTE redirect (THIS FIXES LOGIN LOOP)
                 response.sendRedirect(request.getContextPath() + "/adminDashboard.jsp");
                 return;
             }
 
-            // ❌ Invalid login
             response.sendRedirect(request.getContextPath() + "/adminLogin.jsp");
 
         } catch (Exception e) {
